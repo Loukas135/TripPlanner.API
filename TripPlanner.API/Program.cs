@@ -1,6 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using TripPlanner.API.Configuration;
 using TripPlanner.API.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +16,10 @@ builder.Services.AddDbContext<TripPlannerDbContext>(options =>
 {
 	options.UseSqlServer(connectionString);
 });
+
+builder.Services.AddIdentityCore<ApiUser>()
+	.AddRoles<IdentityRole>()
+	.AddEntityFrameworkStores<TripPlannerDbContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,6 +35,28 @@ builder.Services.AddCors(options =>
 });
 
 builder.Host.UseSerilog((ctx, lc) =>lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
+
+builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+builder.Services.AddAuthentication(options =>
+{
+	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+	{
+		options.TokenValidationParameters = new TokenValidationParameters
+		{
+			ValidateIssuerSigningKey = true,
+			ValidateIssuer = true,
+			ValidateAudience = true,
+			ValidateLifetime = true,
+			ClockSkew = TimeSpan.Zero,
+			ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+			ValidAudience = builder.Configuration["JwtSettings:Audience"],
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+		};
+	}
+);
 
 var app = builder.Build();
 

@@ -6,6 +6,8 @@ using TripPlanner.API.Configuration;
 using TripPlanner.API.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TripPlanner.API.Contracts;
+using TripPlanner.API.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,8 @@ builder.Services.AddCors(options =>
 builder.Host.UseSerilog((ctx, lc) =>lc.WriteTo.Console().ReadFrom.Configuration(ctx.Configuration));
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
+
+builder.Services.AddScoped<IAuthManager, AuthManager>();
 
 builder.Services.AddAuthentication(options =>
 {

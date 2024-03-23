@@ -17,5 +17,31 @@ namespace TripPlanner.API.Controllers
 			this._authManager = authManager;
 			this._logger = logger;
 		}
+		[HttpPost]
+		[Route("login")]
+		public async Task<ActionResult> Login([FromBody]LoginDto creds)
+		{
+			var response = await _authManager.Login(creds);
+			if (response == null)
+			{
+				return Unauthorized();
+			}
+			return Ok(response);
+		}
+		[HttpPost]
+		[Route("register")]
+		public async Task<ActionResult> Register([FromBody] ApiUserDto user)
+		{
+			var response = await _authManager.Register(user);
+			if (response.Any())
+			{
+				foreach(var error in response)
+				{
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+				return BadRequest(ModelState);
+			}
+			return Ok(user);
+		}
 	}
 }

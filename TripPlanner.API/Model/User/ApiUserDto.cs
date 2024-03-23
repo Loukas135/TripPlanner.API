@@ -3,21 +3,18 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace TripPlanner.API.Model.User
 {
-	public class ApiUserDto
+	public class ApiUserDto:LoginDto
 	{
 		[Required]
-		public string FirstName;
+		public string FirstName { get; set; }
 		[Required]
-		public string LastName;
+		public string LastName { get; set; }
+		/*public string Email;
 		[Required]
-		public string Email;
-		[Required]
-		public bool IsEmailConfirmed;
-		[Required]
-		[StringLength(16, ErrorMessage = "Your Password is limited from {2} to {1} characters.", MinimumLength = 6)]
+		[StringLength(16, ErrorMessage = "Your Password is limited from 6 to 16 characters.", MinimumLength = 6)]
 		public string Password;
 		[AllowNull]
-		public string PhoneNumber;
+		public string PhoneNumber;*/
 
 	}
 }

@@ -19,7 +19,7 @@ builder.Services.AddDbContext<TripPlannerDbContext>(options =>
 	options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddIdentityCore<ApiUser>()
+builder.Services.AddIdentityCore<ApiUser> ()
 	.AddRoles<IdentityRole>()
 	.AddEntityFrameworkStores<TripPlannerDbContext>();
 

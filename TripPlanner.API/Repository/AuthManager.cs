@@ -8,6 +8,10 @@ using System.Text;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
 using TripPlanner.API.Model.User;
+using TripPlanner.API.Model.User.CarRental;
+using TripPlanner.API.Model.User.Hotel;
+using TripPlanner.API.Model.User.Restaurant;
+using TripPlanner.API.Model.User.TourismOffice;
 
 namespace TripPlanner.API.Repository
 {
@@ -36,6 +40,7 @@ namespace TripPlanner.API.Repository
             {
                 return null;
             }
+
 			var token = await GenerateToken(_user);
 
 			return new AuthResponseDto {
@@ -78,13 +83,32 @@ namespace TripPlanner.API.Repository
 		{
 			_user = _mapper.Map<ApiUser>(userDto);
 			_user.UserName = _user.Email;
-			var check = await _userManager.CreateAsync(_user,userDto.Password);
+			var check = await _userManager.CreateAsync(_user, userDto.Password);
 			if (check.Succeeded)
 			{
 				 await _userManager.AddToRoleAsync(_user, "User");
 			}
 			return check.Errors;
 		}
-		
+
+		public Task<IEnumerable<IdentityError>> RegisterHotel(RegisterHotelDto hotelOwnerDto)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<IEnumerable<IdentityError>> RegisterCarRental(RegisterCarRentalDto carRentalDto)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<IEnumerable<IdentityError>> RegisterRestaurant(RegisterRestaurantDto restaurantDto)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<IEnumerable<IdentityError>> RegisterTourismOffice(RegisterTourismOfficeDto registerTourismOfficeDto)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

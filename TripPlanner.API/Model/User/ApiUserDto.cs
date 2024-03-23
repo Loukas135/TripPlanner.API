@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace TripPlanner.API.Model.User
 {
-	public class ApiUserDto:LoginDto
+	public class ApiUserDto : LoginDto
 	{
 		[Required]
 		public string FirstName { get; set; }

@@ -7,11 +7,9 @@ using System.Security.Claims;
 using System.Text;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
+using TripPlanner.API.Data.Services;
 using TripPlanner.API.Model.User;
-using TripPlanner.API.Model.User.CarRental;
-using TripPlanner.API.Model.User.Hotel;
-using TripPlanner.API.Model.User.Restaurant;
-using TripPlanner.API.Model.User.TourismOffice;
+
 
 namespace TripPlanner.API.Repository
 {
@@ -59,9 +57,9 @@ namespace TripPlanner.API.Repository
 			var userClaims = await _userManager.GetClaimsAsync(user);
 			var claimList = new List<Claim>
 			{
-				new Claim(JwtRegisteredClaimNames.Sub,user.Email),
-				new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-				new Claim(JwtRegisteredClaimNames.Email,user.Email),
+				new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+				new Claim(JwtRegisteredClaimNames.Email, user.Email),
 				new Claim("id",user.Id)
 			}.Union(userClaims).Union(roleClaims);
 			var token = new JwtSecurityToken(
@@ -91,22 +89,7 @@ namespace TripPlanner.API.Repository
 			return check.Errors;
 		}
 
-		public Task<IEnumerable<IdentityError>> RegisterHotel(RegisterHotelDto hotelOwnerDto)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<IEnumerable<IdentityError>> RegisterCarRental(RegisterCarRentalDto carRentalDto)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<IEnumerable<IdentityError>> RegisterRestaurant(RegisterRestaurantDto restaurantDto)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<IEnumerable<IdentityError>> RegisterTourismOffice(RegisterTourismOfficeDto registerTourismOfficeDto)
+		public Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto)
 		{
 			throw new NotImplementedException();
 		}

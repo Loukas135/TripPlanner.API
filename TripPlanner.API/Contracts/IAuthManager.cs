@@ -7,7 +7,7 @@ namespace TripPlanner.API.Contracts
     public interface IAuthManager
 	{
 		Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto);
-		Task<IEnumerable<IdentityError>> RegisterHotel(ServiceRegisterDto serviceRegisterDto);
+		Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto);
 		Task<AuthResponseDto> Login(LoginDto loginDto);
 		Task<bool> Logout();
 	}

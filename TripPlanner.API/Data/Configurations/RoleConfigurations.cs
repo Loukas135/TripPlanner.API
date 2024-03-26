@@ -31,13 +31,13 @@ namespace TripPlanner.API.Data.Configurations
 				},
 				new IdentityRole
 				{
-					Name = "TravelOffice",
-					NormalizedName = "TRAVELOFFICE"
+					Name = "TourismOffice",
+					NormalizedName = "TOURISMOFFICE"
 				},
 				new IdentityRole
 				{
-					Name = "RestaurantOwner",
-					NormalizedName = "RESTAURANTOWNER"
+					Name = "Restaurant",
+					NormalizedName = "RESTAURANT"
 				}
 			);
 		}

@@ -2,14 +2,12 @@
 
 namespace TripPlanner.API.Data.Services
 {
-    public class TourismOffice
-    {
-        public int Id { get; set; }
+    public class ServiceRegisterDto
+	{
         public string Name { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
-        [ForeignKey(nameof(GovernorateId))]
-        public int GovernorateId { get; set; }
-        public Governorate Governorate { get; set; }
+        public string GovernorateName { get; set; }
+        public string ServiceType { get; set; }
     }
 }

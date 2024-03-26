@@ -11,5 +11,9 @@ namespace TripPlanner.API.Data.Services
 		[ForeignKey(nameof(GovernorateId))]
 		public int GovernorateId { get; set; }
 		public Governorate Governorate { get; set; }
+		[ForeignKey(nameof(ApiUserId))]
+		public int ApiUserId { get; set; }
+		public ApiUser ApiUser{ get; set; }
+
 	}
 }

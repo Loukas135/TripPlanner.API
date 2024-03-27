@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using TripPlanner.API.Contracts;
@@ -19,11 +21,16 @@ namespace TripPlanner.API.Repository
 		private readonly IMapper _mapper;
 		private readonly IConfiguration _configuration;
 		private ApiUser _user;
-		public AuthManager(UserManager<ApiUser> userManager, IMapper mapper, IConfiguration configuration)
+		private readonly TripPlannerDbContext _context;
+		private readonly string _loginprovidor = "TripPlannerLoginProvidor";
+        private readonly string _refresh= "RefreshToken";
+
+        public AuthManager(UserManager<ApiUser> userManager, IMapper mapper, IConfiguration configuration, TripPlannerDbContext context)
         {
 			this._userManager = userManager;
 			this._mapper = mapper;
 			this._configuration = configuration;
+			_context = context;
 		}
 
         public async Task<AuthResponseDto> Login(LoginDto loginDto)
@@ -89,9 +96,57 @@ namespace TripPlanner.API.Repository
 			return check.Errors;
 		}
 
-		public Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto)
+		public async Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto)
 		{
-			throw new NotImplementedException();
+			_user = _mapper.Map<ApiUser>(serviceOwnerDto);
+			_user.UserName = serviceOwnerDto.ServiceUserName;
+			var check = await _userManager.CreateAsync(_user, serviceOwnerDto.Password);
+			if (check.Succeeded) {
+				await _userManager.AddToRoleAsync(_user, serviceOwnerDto.ServiceType);
+			}
+			return check.Errors;
+			
 		}
-	}
+        public async Task<string> CreateRefreshToken()
+        {
+            await _userManager.RemoveAuthenticationTokenAsync(_user, _loginprovidor, _refresh);
+            var NewToken = await _userManager.GenerateUserTokenAsync(_user, _loginprovidor, _refresh);
+            var res = await _userManager.SetAuthenticationTokenAsync(_user, _loginprovidor, _refresh, NewToken);
+            return NewToken;
+
+        }
+
+        public async Task<AuthResponseDto> VerifyRefreshToken(AuthResponseDto request)
+        {
+            var jwtSecurityHandler = new JwtSecurityTokenHandler();
+            var tokenContent = jwtSecurityHandler.ReadJwtToken(request.Token);
+            var username = tokenContent.Claims.ToList().FirstOrDefault(q => q.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            _user = await _userManager.FindByIdAsync(username);
+            if (_user is null)
+            {
+                return null;
+            }
+            var isValidRefreshToken = await _userManager.VerifyUserTokenAsync(_user, _loginprovidor, _refresh, request.RefreshToken);
+            if (isValidRefreshToken)
+            {
+                var token = await GenerateToken(_user);
+                return new AuthResponseDto
+                {
+                    Token = token,
+                    UserName = _user.UserName,
+                    RefreshToken = await CreateRefreshToken()
+                };
+            }
+            await _userManager.UpdateSecurityStampAsync(_user);
+            return null;
+
+        }
+        public async Task DeleteToken(ApiUser user)
+        {
+            _user = user;
+            await _userManager.RemoveAuthenticationTokenAsync(_user, _loginprovidor, _refresh);
+            await _userManager.UpdateSecurityStampAsync(_user);
+
+        }
+    }
 }

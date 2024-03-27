@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TripPlanner.API.Contracts;
+using TripPlanner.API.Data;
 using TripPlanner.API.Model.User;
 using TripPlanner.API.Repository;
 
@@ -12,14 +15,19 @@ namespace TripPlanner.API.Controllers
 	{
 		private readonly IAuthManager _authManager;
 		private readonly ILogger<AccountController> _logger;
-		public AccountController(IAuthManager authManager, ILogger<AccountController> logger)
+		private readonly UserManager<ApiUser> _userManager;
+		public AccountController(IAuthManager authManager, ILogger<AccountController> logger, UserManager<ApiUser> userManager)
         {
 			this._authManager = authManager;
 			this._logger = logger;
+			_userManager = userManager;
 		}
 		[HttpPost]
 		[Route("login")]
-		public async Task<ActionResult> Login([FromBody]LoginDto creds)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> Login([FromBody]LoginDto creds)
 		{
 			var response = await _authManager.Login(creds);
 			if (response == null)
@@ -30,7 +38,8 @@ namespace TripPlanner.API.Controllers
 		}
 		[HttpPost]
 		[Route("register")]
-		public async Task<ActionResult> Register([FromBody] ApiUserDto user)
+	
+        public async Task<ActionResult> Register([FromBody] ApiUserDto user)
 		{
 			var response = await _authManager.Register(user);
 			if (response.Any())
@@ -43,5 +52,39 @@ namespace TripPlanner.API.Controllers
 			}
 			return Ok(user);
 		}
-	}
+		[HttpPost]
+		[Route("RefreshToken")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult> RefreshToken([FromBody]AuthResponseDto request)
+		{
+			var response = await _authManager.VerifyRefreshToken(request);
+			if (response is null)
+			{
+				return Unauthorized();
+			}
+			return Ok(response);
+		}
+        [HttpPost]
+        [Route("Logout")]
+        [Authorize]
+        public async Task<ActionResult> LogOut()
+        {
+            var user = await GetCurrentUser();
+            await _authManager.DeleteToken(user);
+            return Ok();
+        }
+        private async Task<ApiUser> GetCurrentUser()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (user is null)
+            {
+                return null;
+            }
+            return user;
+        }
+    }
 }

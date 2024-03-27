@@ -11,7 +11,7 @@ namespace TripPlanner.API.Model.User
 		[Required]
 		public string ServiceUserName { get; set; }
 		[Required]
-		public string ServiceEmail { get; set; }
+		public string Email { get; set; }
 		[Required]
 		public string Password { get; set; }
 		[Required]

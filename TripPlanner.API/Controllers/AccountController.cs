@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
+using TripPlanner.API.Data.Services;
 using TripPlanner.API.Model.User;
 using TripPlanner.API.Repository;
 
@@ -38,7 +39,6 @@ namespace TripPlanner.API.Controllers
 		}
 		[HttpPost]
 		[Route("register")]
-	
         public async Task<ActionResult> Register([FromBody] ApiUserDto user)
 		{
 			var response = await _authManager.Register(user);
@@ -52,6 +52,26 @@ namespace TripPlanner.API.Controllers
 			}
 			return Ok(user);
 		}
+
+		[HttpPost]
+		[Route("RegisterServiceOwner")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult> RegisterServiceOwner([FromBody] ServiceOwnerDto serviceOwnerDto)
+		{
+			var response = await _authManager.RegisterServiceOwner(serviceOwnerDto);
+			if (response.Any())
+			{
+				foreach(var error in response)
+				{
+					ModelState.AddModelError(error.Code, error.Description);
+				}
+				return BadRequest(ModelState);
+			}
+			return Ok(serviceOwnerDto);
+		}
+
 		[HttpPost]
 		[Route("RefreshToken")]
         [Authorize]

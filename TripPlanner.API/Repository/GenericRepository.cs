@@ -5,7 +5,7 @@ using TripPlanner.API.Data;
 
 namespace TripPlanner.API.Repository
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T:class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly TripPlannerDbContext _context;
         private readonly IMapper _mapper;
@@ -13,7 +13,7 @@ namespace TripPlanner.API.Repository
         public async Task<T> CreateAsync(T entity)
         {
             await _context.AddAsync(entity);
-             _context.SaveChanges();
+            _context.SaveChanges();
             return entity;
         }
 
@@ -28,13 +28,11 @@ namespace TripPlanner.API.Repository
         {
             var entity = await GetAsync(id);
             return entity != null;
-
         }
 
         public async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
-            
         }
 
         public async Task<T> GetAsync(int? id)

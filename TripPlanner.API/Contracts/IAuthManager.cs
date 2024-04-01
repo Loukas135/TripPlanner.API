@@ -7,11 +7,11 @@ namespace TripPlanner.API.Contracts
 {
     public interface IAuthManager
 	{
-		Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto);
-		Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto);
-		Task<AuthResponseDto> Login(LoginDto loginDto);
-		Task<AuthResponseDto> VerifyRefreshToken(AuthResponseDto request);
-		public  Task DeleteToken(ApiUser user);
+		public Task<IEnumerable<IdentityError>> Register(ApiUserDto userDto);
+		public Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto);
+		public Task<AuthResponseDto> Login(LoginDto loginDto);
+		public Task<AuthResponseDto> VerifyRefreshToken(AuthResponseDto request);
+		public Task DeleteToken(ApiUser user);
        
 	}
 }

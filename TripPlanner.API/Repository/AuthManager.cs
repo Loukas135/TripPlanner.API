@@ -139,7 +139,6 @@ namespace TripPlanner.API.Repository
             }
             await _userManager.UpdateSecurityStampAsync(_user);
             return null;
-
         }
         public async Task DeleteToken(ApiUser user)
         {

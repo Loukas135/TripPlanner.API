@@ -18,6 +18,8 @@ namespace TripPlanner.API.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new RoleConfigurations());
             modelBuilder.ApplyConfiguration(new FeatureConfiguration());
+            modelBuilder.ApplyConfiguration(new CarCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new RoomCategoryConfiguration());
         }
     }
 }

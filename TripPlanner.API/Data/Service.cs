@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using TripPlanner.API.Data.Configurations;
 
 namespace TripPlanner.API.Data
 {
@@ -14,6 +15,8 @@ namespace TripPlanner.API.Data
         [ForeignKey(nameof(ApiUserId))]
         public int ApiUserId { get; set; }
         public ApiUser ApiUser { get; set; }
-
+		[ForeignKey(nameof(ServiceTypeId))]
+		public int ServiceTypeId { get; set; }
+        public ServiceType ServiceType { get; set; }
     }
 }

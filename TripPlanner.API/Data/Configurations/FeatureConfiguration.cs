@@ -4,27 +4,27 @@ using TripPlanner.API.Data.Services;
 
 namespace TripPlanner.API.Data.Configurations
 {
-	public class FeatureConfiguration : IEntityTypeConfiguration<Feature>
+	public class FeatureConfiguration : IEntityTypeConfiguration<ServiceType>
 	{
-		public void Configure(EntityTypeBuilder<Feature> builder)
+		public void Configure(EntityTypeBuilder<ServiceType> builder)
 		{
 			builder.HasData(
-				new Feature
+				new ServiceType
 				{
 					Id = 1,
 					Name = "Hotels"
 				},
-				new Feature
+				new ServiceType
 				{
 					Id = 2,
 					Name = "Tourism Office"
 				},
-				new Feature
+				new ServiceType
 				{
 					Id = 3,
 					Name = "Car Rental"
 				},
-				new Feature
+				new ServiceType
 				{
 					Id = 4,
 					Name = "Restaurant"

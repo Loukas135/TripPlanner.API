@@ -86,10 +86,11 @@ namespace TripPlanner.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Service>> PostService(ServiceRegisterDto serviceRegisterDto)
         {
-            var newService = _mapper.Map<Service>(serviceRegisterDto);
-            await _serviceRepository.CreateAsync(newService);
 
-            return CreatedAtAction("GetService", new { id = newService.Id }, newService);
+            var newService = _mapper.Map<Service>(serviceRegisterDto);
+            return Ok(newService);
+            /*await _serviceRepository.AddAsync(newService);
+            return CreatedAtAction("GetService", new { id = newService.Id }, newService);*/
         }
 
         // DELETE: api/Services/5

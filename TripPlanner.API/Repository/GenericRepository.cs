@@ -10,7 +10,7 @@ namespace TripPlanner.API.Repository
         private readonly TripPlannerDbContext _context;
         private readonly IMapper _mapper;
 
-        public async Task<T> CreateAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await _context.AddAsync(entity);
             await _context.SaveChangesAsync();

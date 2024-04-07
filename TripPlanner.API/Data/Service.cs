@@ -20,7 +20,8 @@ namespace TripPlanner.API.Data
 
         [ForeignKey(nameof(ApiUserId))]
         public string ApiUserId { get; set; }
-        public ApiUser ApiUser { get; set; }
+        [AllowNull]
+        public ApiUser? ApiUser { get; set; }
 
 
 		[ForeignKey(nameof(ServiceTypeId))]

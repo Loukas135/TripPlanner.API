@@ -19,6 +19,7 @@ namespace TripPlanner.API.Data
             modelBuilder.ApplyConfiguration(new ServiceConfiguration());
             modelBuilder.ApplyConfiguration(new CarCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new RoomCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new GovernorateConfiguration());
         }
     }
 }

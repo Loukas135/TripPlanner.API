@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
@@ -16,16 +17,23 @@ namespace TripPlanner.API.Repository
 			this._context = context;
 			this._mapper = mapper;
 		}
-        public async Task<List<Service>> SearchByName(string name)
+
+		public Task<List<Service>> FilterByType(string type)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task<List<Service>> SearchByName(string name)
 		{
 			var service = from s in _context.Services
 						  where s.Name == name
 						  select s;
 			return service.ToList<Service>();
 		}
-		public Task<List<Service>> FilterByType(string type)
-		{
-
-		}
+		
+		//public Task<List<Service>> FilterByType(string type)
+		//{
+		//
+		//}
 	}
 }

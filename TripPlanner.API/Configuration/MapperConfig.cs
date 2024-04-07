@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TripPlanner.API.Data;
+using TripPlanner.API.Data.Services;
 using TripPlanner.API.Model.User;
 
 namespace TripPlanner.API.Configuration
@@ -9,6 +10,9 @@ namespace TripPlanner.API.Configuration
         public MapperConfig()
         {
             CreateMap<ApiUser, ApiUserDto>().ReverseMap();
+            CreateMap<ApiUser, ServiceOwnerDto>().ReverseMap();
+
+            CreateMap<Service, ServiceRegisterDto>().ReverseMap();
         }
     }
 }

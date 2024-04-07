@@ -4,7 +4,7 @@ using TripPlanner.API.Data.Services;
 
 namespace TripPlanner.API.Data.Configurations
 {
-	public class FeatureConfiguration : IEntityTypeConfiguration<ServiceType>
+	public class ServiceConfiguration : IEntityTypeConfiguration<ServiceType>
 	{
 		public void Configure(EntityTypeBuilder<ServiceType> builder)
 		{

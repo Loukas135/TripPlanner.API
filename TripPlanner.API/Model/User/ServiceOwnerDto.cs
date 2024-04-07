@@ -6,15 +6,15 @@ using TripPlanner.API.Data.Services;
 
 namespace TripPlanner.API.Model.User
 {
-	public class ServiceOwnerDto
-	{
-		[Required]
-		public string ServiceUserName { get; set; }
-		[Required]
-		public string Email { get; set; }
-		[Required]
-		public string Password { get; set; }
-		[Required]
-		public string ServiceType { get; set; }
-	}
+    public class ServiceOwnerDto
+    {
+        [Required]
+        public string ServiceUserName { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
+        [Required]
+        public string ServiceType { get; set; }
+    }
 }

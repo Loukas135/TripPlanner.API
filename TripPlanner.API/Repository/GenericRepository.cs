@@ -13,7 +13,7 @@ namespace TripPlanner.API.Repository
         public async Task<T> CreateAsync(T entity)
         {
             await _context.AddAsync(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return entity;
         }
 
@@ -46,8 +46,8 @@ namespace TripPlanner.API.Repository
 
         public async Task UpdateAsync(T entity)
         {
-            _context.Update(entity);
-            _context.SaveChangesAsync();
+			_context.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

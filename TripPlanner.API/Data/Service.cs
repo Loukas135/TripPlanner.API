@@ -9,12 +9,18 @@ namespace TripPlanner.API.Data
         public string Name { get; set; }
         public string Address { get; set; }
         public string Description { get; set; }
+
+
         [ForeignKey(nameof(GovernorateId))]
         public int GovernorateId { get; set; }
         public Governorate Governorate { get; set; }
-        [ForeignKey(nameof(ApiUserId))]
-        public int ApiUserId { get; set; }
+
+
+        [ForeignKey(nameof(UserId))]
+        public string UserId { get; set; }
         public ApiUser ApiUser { get; set; }
+
+
 		[ForeignKey(nameof(ServiceTypeId))]
 		public int ServiceTypeId { get; set; }
         public ServiceType ServiceType { get; set; }

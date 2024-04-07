@@ -8,5 +8,7 @@ namespace TripPlanner.API.Contracts
     {
        public Task<List<Service>> SearchByName(string name);
        public Task<List<Service>> FilterByType(string type);
-    }
+       //public Task CreateServiceAsync(ServiceRegisterDto serviceRegisterDto, string userName);
+
+	}
 }

@@ -5,18 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
 using TripPlanner.API.Data.Services;
+using TripPlanner.API.Model.Services;
 using TripPlanner.API.Model.User;
 using TripPlanner.API.Repository;
 
 namespace TripPlanner.API.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class AccountController : ControllerBase
 	{
 		private readonly IAuthManager _authManager;
 		private readonly ILogger<AccountController> _logger;
 		private readonly UserManager<ApiUser> _userManager;
+		
 		public AccountController(IAuthManager authManager, ILogger<AccountController> logger, UserManager<ApiUser> userManager)
         {
 			this._authManager = authManager;
@@ -61,6 +63,16 @@ namespace TripPlanner.API.Controllers
 		public async Task<ActionResult> RegisterServiceOwner([FromBody] ServiceOwnerDto serviceOwnerDto)
 		{
 			var response = await _authManager.RegisterServiceOwner(serviceOwnerDto);
+			if (response == null)
+			{
+				return BadRequest();
+			}
+			return Ok(response);
+		}
+		/*
+		public async Task<ActionResult> RegisterServiceOwner([FromBody] ServiceOwnerDto serviceOwnerDto)
+		{
+			var response = await _authManager.RegisterServiceOwner(serviceOwnerDto);
 			if (response.Any())
 			{
 				foreach(var error in response)
@@ -71,6 +83,7 @@ namespace TripPlanner.API.Controllers
 			}
 			return Ok(serviceOwnerDto);
 		}
+		*/
 
 		[HttpPost]
 		[Route("RefreshToken")]

@@ -4,33 +4,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
 using TripPlanner.API.Data.Services;
+using TripPlanner.API.Model.Response;
+using TripPlanner.API.Model.Services;
 using TripPlanner.API.Model.User;
 
 
 namespace TripPlanner.API.Repository
 {
-	public class AuthManager : IAuthManager
+    public class AuthManager : IAuthManager
 	{
 		private readonly UserManager<ApiUser> _userManager;
 		private readonly IMapper _mapper;
 		private readonly IConfiguration _configuration;
 		private ApiUser _user;
 		private readonly TripPlannerDbContext _context;
+		private readonly IServiceRepository _serviceRepository;
 		private readonly string _loginprovidor = "TripPlannerLoginProvidor";
         private readonly string _refresh= "RefreshToken";
 
-        public AuthManager(UserManager<ApiUser> userManager, IMapper mapper, IConfiguration configuration, TripPlannerDbContext context)
+		public AuthManager(UserManager<ApiUser> userManager, IMapper mapper, IConfiguration configuration, TripPlannerDbContext context, IServiceRepository serviceRepository)
         {
 			this._userManager = userManager;
 			this._mapper = mapper;
 			this._configuration = configuration;
 			_context = context;
+			this._serviceRepository = serviceRepository;
 		}
 
         public async Task<AuthResponseDto> Login(LoginDto loginDto)
@@ -50,7 +55,7 @@ namespace TripPlanner.API.Repository
 
 			return new AuthResponseDto {
                 Token = token,
-                UserName =_user.UserName
+                UserName = _user.UserName
 				
 			};
 
@@ -99,14 +104,28 @@ namespace TripPlanner.API.Repository
 		public async Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto)
 		{
 			_user = _mapper.Map<ApiUser>(serviceOwnerDto);
-			_user.UserName = serviceOwnerDto.ServiceUserName;
+			_user.UserName = _user.Email;
 			var check = await _userManager.CreateAsync(_user, serviceOwnerDto.Password);
+			if (check.Succeeded)
+			{
+				await _userManager.AddToRoleAsync(_user, "User");
+			}
+			return check.Errors;
+		}
+		/*
+		public async Task<RegisterOwnerResponseDto> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto)
+		{
+			_user = _mapper.Map<ApiUser>(serviceOwnerDto);
+			_user.UserName = _user.Email;
+
+			var check = await _userManager.CreateAsync(_user, serviceOwnerDto.Password);
+			
 			if (check.Succeeded) {
 				await _userManager.AddToRoleAsync(_user, serviceOwnerDto.ServiceType);
 			}
-			return check.Errors;
-			
+			return new RegisterOwnerResponseDto{ ownerId = _user.Id };
 		}
+		*/
         public async Task<string> CreateRefreshToken()
         {
             await _userManager.RemoveAuthenticationTokenAsync(_user, _loginprovidor, _refresh);
@@ -147,5 +166,5 @@ namespace TripPlanner.API.Repository
             await _userManager.UpdateSecurityStampAsync(_user);
 
         }
-    }
+	}
 }

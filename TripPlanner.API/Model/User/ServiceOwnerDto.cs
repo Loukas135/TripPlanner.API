@@ -9,7 +9,7 @@ namespace TripPlanner.API.Model.User
     public class ServiceOwnerDto
     {
         [Required]
-        public string ServiceUserName { get; set; }
+        public string UserName { get; set; }
         [Required]
         public string Email { get; set; }
         [Required]

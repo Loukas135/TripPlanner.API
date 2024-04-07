@@ -7,9 +7,9 @@ namespace TripPlanner.API.Data
 {
 	public class ApiUser : IdentityUser
 	{
-		[AllowNull]
+		/*[AllowNull]
 		public string? FirstName { get; set; }
 		[AllowNull]
-		public string? LastName { get; set; }
+		public string? LastName { get; set; }*/
 	}
 }

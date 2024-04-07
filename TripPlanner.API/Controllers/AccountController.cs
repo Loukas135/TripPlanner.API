@@ -52,7 +52,13 @@ namespace TripPlanner.API.Controllers
                 }
 				return BadRequest(ModelState);
 			}
-			return Ok(user);
+			var creds = new LoginDto
+			{
+				Email = user.Email,
+				Password = user.Password
+			};
+            var logging = await _authManager.Login(creds);
+            return Ok(logging);
 		}
 
 		[HttpPost]
@@ -60,16 +66,8 @@ namespace TripPlanner.API.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult> RegisterServiceOwner([FromBody] ServiceOwnerDto serviceOwnerDto)
-		{
-			var response = await _authManager.RegisterServiceOwner(serviceOwnerDto);
-			if (response == null)
-			{
-				return BadRequest();
-			}
-			return Ok(response);
-		}
-		/*
+		
+		
 		public async Task<ActionResult> RegisterServiceOwner([FromBody] ServiceOwnerDto serviceOwnerDto)
 		{
 			var response = await _authManager.RegisterServiceOwner(serviceOwnerDto);
@@ -81,10 +79,9 @@ namespace TripPlanner.API.Controllers
 				}
 				return BadRequest(ModelState);
 			}
-			return Ok(serviceOwnerDto);
+			var user_id = await _userManager.FindByNameAsync(serviceOwnerDto.UserName);
+			return Ok("user id for next page "+ user_id.Id);
 		}
-		*/
-
 		[HttpPost]
 		[Route("RefreshToken")]
         [Authorize]
@@ -109,6 +106,7 @@ namespace TripPlanner.API.Controllers
             await _authManager.DeleteToken(user);
             return Ok();
         }
+		
         private async Task<ApiUser> GetCurrentUser()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);

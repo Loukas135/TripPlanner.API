@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using TripPlanner.API.Data.Configurations;
 
 namespace TripPlanner.API.Data
@@ -13,16 +14,18 @@ namespace TripPlanner.API.Data
 
         [ForeignKey(nameof(GovernorateId))]
         public int GovernorateId { get; set; }
-        public Governorate Governorate { get; set; }
+        [AllowNull]
+        public Governorate? Governorate { get; set; }
 
 
-        [ForeignKey(nameof(UserId))]
-        public string UserId { get; set; }
+        [ForeignKey(nameof(ApiUserId))]
+        public string ApiUserId { get; set; }
         public ApiUser ApiUser { get; set; }
 
 
 		[ForeignKey(nameof(ServiceTypeId))]
 		public int ServiceTypeId { get; set; }
-        public ServiceType ServiceType { get; set; }
+        [AllowNull]
+        public ServiceType? ServiceType { get; set; }
     }
 }

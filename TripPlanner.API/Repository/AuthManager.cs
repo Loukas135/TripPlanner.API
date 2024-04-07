@@ -104,28 +104,16 @@ namespace TripPlanner.API.Repository
 		public async Task<IEnumerable<IdentityError>> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto)
 		{
 			_user = _mapper.Map<ApiUser>(serviceOwnerDto);
-			_user.UserName = _user.Email;
-			var check = await _userManager.CreateAsync(_user, serviceOwnerDto.Password);
-			if (check.Succeeded)
-			{
-				await _userManager.AddToRoleAsync(_user, "User");
-			}
-			return check.Errors;
-		}
-		/*
-		public async Task<RegisterOwnerResponseDto> RegisterServiceOwner(ServiceOwnerDto serviceOwnerDto)
-		{
-			_user = _mapper.Map<ApiUser>(serviceOwnerDto);
-			_user.UserName = _user.Email;
+			_user.UserName = _user.UserName;
 
 			var check = await _userManager.CreateAsync(_user, serviceOwnerDto.Password);
 			
 			if (check.Succeeded) {
 				await _userManager.AddToRoleAsync(_user, serviceOwnerDto.ServiceType);
 			}
-			return new RegisterOwnerResponseDto{ ownerId = _user.Id };
+			return check.Errors;
 		}
-		*/
+		
         public async Task<string> CreateRefreshToken()
         {
             await _userManager.RemoveAuthenticationTokenAsync(_user, _loginprovidor, _refresh);

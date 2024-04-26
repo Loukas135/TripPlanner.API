@@ -12,8 +12,8 @@ using TripPlanner.API.Data;
 namespace TripPlanner.API.Migrations
 {
     [DbContext(typeof(TripPlannerDbContext))]
-    [Migration("20240404182659_AddedIdentityRolesAndCategoriesTables")]
-    partial class AddedIdentityRolesAndCategoriesTables
+    [Migration("20240417185837_AddedConfigurationsAndIdentityTables")]
+    partial class AddedConfigurationsAndIdentityTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,37 +54,37 @@ namespace TripPlanner.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5a2faa59-859f-4455-8e18-8a9289c422ba",
+                            Id = "0724f204-2d64-4d41-af4e-eb538ddf4880",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "0dc5c3b1-80b6-4370-bf36-2a92f190e8ec",
+                            Id = "9a836804-5675-4fab-be60-f352e0c2afa9",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "6099484c-f523-4e83-b302-2e4edca0c576",
+                            Id = "1dea26d4-8deb-41d6-bc49-f179f74208f5",
                             Name = "HotelOwner",
                             NormalizedName = "HOTELOWNER"
                         },
                         new
                         {
-                            Id = "78f840db-aefa-4fd1-85d1-1d3d9a349564",
+                            Id = "18e8b4c5-fff7-4c2e-b8fb-d42c84e3accd",
                             Name = "CarRental",
                             NormalizedName = "CARRENTAL"
                         },
                         new
                         {
-                            Id = "613f0505-4dd1-412c-aecd-75696d71816f",
+                            Id = "d39eb6a4-5173-47b1-8496-a72b81196d9a",
                             Name = "TourismOffice",
                             NormalizedName = "TOURISMOFFICE"
                         },
                         new
                         {
-                            Id = "8627071b-1820-4570-889d-16afa73c3ca6",
+                            Id = "06672edc-1675-4aa3-a8cd-55a7ce7ae21d",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         });
@@ -215,12 +215,6 @@ namespace TripPlanner.API.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -296,7 +290,7 @@ namespace TripPlanner.API.Migrations
 
                     b.HasIndex("CarCategoryId");
 
-                    b.ToTable("Car");
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.CarCategory", b =>
@@ -391,6 +385,92 @@ namespace TripPlanner.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Governorate");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Damascus is the capital of Syria",
+                            Name = "Damascus"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Latakia is one of the Syrian governorate",
+                            Name = "Latakia"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Tartous is one of the Syrian governorate",
+                            Name = "Tartous"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Aleppo is one of the Syrian governorate",
+                            Name = "Aleppo"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Daraa is one of the Syrian governorate",
+                            Name = "Daraa"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Qunaitira is one of the Syrian governorate",
+                            Name = "Qunaitira"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Sweida is one of the Syrian governorate",
+                            Name = "Sweida"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Idleb is one of the Syrian governorate",
+                            Name = "Idleb"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Deir Al Zor is one of the Syrian governorate",
+                            Name = "Deir Al Zor"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Al Hasaka is one of the Syrian governorate",
+                            Name = "Al Hasaka"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "Qamshli is one of the Syrian governorate",
+                            Name = "Qamshli"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "Al Raqqa is one of the Syrian governorate",
+                            Name = "Al Raqqa"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "Hama is one of the Syrian governorate",
+                            Name = "Hama"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Description = "Liwaa Iskandaron is one of the Syrian governorate",
+                            Name = "Liwaa Iskandaron"
+                        });
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.Room", b =>
@@ -423,7 +503,7 @@ namespace TripPlanner.API.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("Room");
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.RoomCategory", b =>
@@ -473,6 +553,7 @@ namespace TripPlanner.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApiUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -489,10 +570,6 @@ namespace TripPlanner.API.Migrations
                     b.Property<int>("ServiceTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApiUserId");
@@ -502,6 +579,40 @@ namespace TripPlanner.API.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("TripPlanner.API.Data.Trip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Days")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Trips");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -585,7 +696,9 @@ namespace TripPlanner.API.Migrations
                 {
                     b.HasOne("TripPlanner.API.Data.ApiUser", "ApiUser")
                         .WithMany()
-                        .HasForeignKey("ApiUserId");
+                        .HasForeignKey("ApiUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TripPlanner.API.Data.Governorate", "Governorate")
                         .WithMany("Services")

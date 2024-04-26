@@ -19,7 +19,8 @@ namespace TripPlanner.API.Controllers
 		private readonly ILogger<AccountController> _logger;
 		private readonly UserManager<ApiUser> _userManager;
 		
-		public AccountController(IAuthManager authManager, ILogger<AccountController> logger, UserManager<ApiUser> userManager)
+		public AccountController(IAuthManager authManager,
+			ILogger<AccountController> logger, UserManager<ApiUser> userManager)
         {
 			this._authManager = authManager;
 			this._logger = logger;
@@ -40,7 +41,7 @@ namespace TripPlanner.API.Controllers
 			return Ok(response);
 		}
 		[HttpPost]
-		[Route("register")]
+		[Route("Register")]
         public async Task<ActionResult> Register([FromBody] ApiUserDto user)
 		{
 			var response = await _authManager.Register(user);
@@ -66,8 +67,6 @@ namespace TripPlanner.API.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		
-		
 		public async Task<ActionResult> RegisterServiceOwner([FromBody] ServiceOwnerDto serviceOwnerDto)
 		{
 			var response = await _authManager.RegisterServiceOwner(serviceOwnerDto);

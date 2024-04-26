@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TripPlanner.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedIdentityRolesAndCategoriesTables : Migration
+    public partial class AddedConfigurationsAndIdentityTables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,8 +32,6 @@ namespace TripPlanner.API.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -105,6 +103,24 @@ namespace TripPlanner.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServiceType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Trips",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    From = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    To = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Days = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    ServiceId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trips", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -214,7 +230,7 @@ namespace TripPlanner.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Car",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -227,9 +243,9 @@ namespace TripPlanner.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Car", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Car_CarCategory_CarCategoryId",
+                        name: "FK_Cars_CarCategory_CarCategoryId",
                         column: x => x.CarCategoryId,
                         principalTable: "CarCategory",
                         principalColumn: "Id",
@@ -246,8 +262,7 @@ namespace TripPlanner.API.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GovernorateId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApiUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ApiUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ServiceTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -257,7 +272,8 @@ namespace TripPlanner.API.Migrations
                         name: "FK_Services_AspNetUsers_ApiUserId",
                         column: x => x.ApiUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Services_Governorate_GovernorateId",
                         column: x => x.GovernorateId,
@@ -273,7 +289,7 @@ namespace TripPlanner.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Room",
+                name: "Rooms",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -286,15 +302,15 @@ namespace TripPlanner.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Room", x => x.Id);
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Room_RoomCategory_RoomCategoryId",
+                        name: "FK_Rooms_RoomCategory_RoomCategoryId",
                         column: x => x.RoomCategoryId,
                         principalTable: "RoomCategory",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Room_Services_ServiceId",
+                        name: "FK_Rooms_Services_ServiceId",
                         column: x => x.ServiceId,
                         principalTable: "Services",
                         principalColumn: "Id",
@@ -306,12 +322,12 @@ namespace TripPlanner.API.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0dc5c3b1-80b6-4370-bf36-2a92f190e8ec", null, "Administrator", "ADMINISTRATOR" },
-                    { "5a2faa59-859f-4455-8e18-8a9289c422ba", null, "User", "USER" },
-                    { "6099484c-f523-4e83-b302-2e4edca0c576", null, "HotelOwner", "HOTELOWNER" },
-                    { "613f0505-4dd1-412c-aecd-75696d71816f", null, "TourismOffice", "TOURISMOFFICE" },
-                    { "78f840db-aefa-4fd1-85d1-1d3d9a349564", null, "CarRental", "CARRENTAL" },
-                    { "8627071b-1820-4570-889d-16afa73c3ca6", null, "Restaurant", "RESTAURANT" }
+                    { "06672edc-1675-4aa3-a8cd-55a7ce7ae21d", null, "Restaurant", "RESTAURANT" },
+                    { "0724f204-2d64-4d41-af4e-eb538ddf4880", null, "User", "USER" },
+                    { "18e8b4c5-fff7-4c2e-b8fb-d42c84e3accd", null, "CarRental", "CARRENTAL" },
+                    { "1dea26d4-8deb-41d6-bc49-f179f74208f5", null, "HotelOwner", "HOTELOWNER" },
+                    { "9a836804-5675-4fab-be60-f352e0c2afa9", null, "Administrator", "ADMINISTRATOR" },
+                    { "d39eb6a4-5173-47b1-8496-a72b81196d9a", null, "TourismOffice", "TOURISMOFFICE" }
                 });
 
             migrationBuilder.InsertData(
@@ -322,6 +338,27 @@ namespace TripPlanner.API.Migrations
                     { 1, "High" },
                     { 2, "Medium" },
                     { 3, "Low" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Governorate",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Damascus is the capital of Syria", "Damascus" },
+                    { 2, "Latakia is one of the Syrian governorate", "Latakia" },
+                    { 3, "Tartous is one of the Syrian governorate", "Tartous" },
+                    { 4, "Aleppo is one of the Syrian governorate", "Aleppo" },
+                    { 5, "Daraa is one of the Syrian governorate", "Daraa" },
+                    { 6, "Qunaitira is one of the Syrian governorate", "Qunaitira" },
+                    { 7, "Sweida is one of the Syrian governorate", "Sweida" },
+                    { 8, "Idleb is one of the Syrian governorate", "Idleb" },
+                    { 9, "Deir Al Zor is one of the Syrian governorate", "Deir Al Zor" },
+                    { 10, "Al Hasaka is one of the Syrian governorate", "Al Hasaka" },
+                    { 11, "Qamshli is one of the Syrian governorate", "Qamshli" },
+                    { 12, "Al Raqqa is one of the Syrian governorate", "Al Raqqa" },
+                    { 13, "Hama is one of the Syrian governorate", "Hama" },
+                    { 14, "Liwaa Iskandaron is one of the Syrian governorate", "Liwaa Iskandaron" }
                 });
 
             migrationBuilder.InsertData(
@@ -385,18 +422,18 @@ namespace TripPlanner.API.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Car_CarCategoryId",
-                table: "Car",
+                name: "IX_Cars_CarCategoryId",
+                table: "Cars",
                 column: "CarCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Room_RoomCategoryId",
-                table: "Room",
+                name: "IX_Rooms_RoomCategoryId",
+                table: "Rooms",
                 column: "RoomCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Room_ServiceId",
-                table: "Room",
+                name: "IX_Rooms_ServiceId",
+                table: "Rooms",
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
@@ -434,10 +471,13 @@ namespace TripPlanner.API.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Car");
+                name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Room");
+                name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "Trips");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -98,6 +98,7 @@ namespace TripPlanner.API.Repository
 			{
 				 await _userManager.AddToRoleAsync(_user, "User");
 			}
+			_user.wallet = 0;
 			return check.Errors;
 		}
 

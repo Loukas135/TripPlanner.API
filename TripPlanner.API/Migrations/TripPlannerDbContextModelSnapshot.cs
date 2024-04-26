@@ -51,37 +51,37 @@ namespace TripPlanner.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "acb8b345-637a-4efd-b17f-0a0f19d4e93f",
+                            Id = "0724f204-2d64-4d41-af4e-eb538ddf4880",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "7bf8368b-c915-43bc-9336-13b14acd8830",
+                            Id = "9a836804-5675-4fab-be60-f352e0c2afa9",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "3d11bada-3f0f-4407-97c7-96dee55b1e70",
+                            Id = "1dea26d4-8deb-41d6-bc49-f179f74208f5",
                             Name = "HotelOwner",
                             NormalizedName = "HOTELOWNER"
                         },
                         new
                         {
-                            Id = "b23f8084-2fc3-4541-b809-3545985b4c2a",
+                            Id = "18e8b4c5-fff7-4c2e-b8fb-d42c84e3accd",
                             Name = "CarRental",
                             NormalizedName = "CARRENTAL"
                         },
                         new
                         {
-                            Id = "ba50d554-3c66-4b1e-81c3-1e5fd46f5353",
+                            Id = "d39eb6a4-5173-47b1-8496-a72b81196d9a",
                             Name = "TourismOffice",
                             NormalizedName = "TOURISMOFFICE"
                         },
                         new
                         {
-                            Id = "8aea07b8-7085-436f-9b06-dee70e76a24d",
+                            Id = "06672edc-1675-4aa3-a8cd-55a7ce7ae21d",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         });
@@ -287,7 +287,7 @@ namespace TripPlanner.API.Migrations
 
                     b.HasIndex("CarCategoryId");
 
-                    b.ToTable("Car");
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.CarCategory", b =>
@@ -500,7 +500,7 @@ namespace TripPlanner.API.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("Room");
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.RoomCategory", b =>
@@ -576,6 +576,40 @@ namespace TripPlanner.API.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("TripPlanner.API.Data.Trip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Days")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Trips");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

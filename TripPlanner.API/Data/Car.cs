@@ -12,6 +12,6 @@ namespace TripPlanner.API.Data
 		public int CarCategoryId { get; set; }
 		[ForeignKey(nameof(ServiceId))]
 		public int ServiceId { get; set; }
-
+		public int Quantity { get; set; }
 	}
 }

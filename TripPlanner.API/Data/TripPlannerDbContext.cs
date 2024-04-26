@@ -12,6 +12,9 @@ namespace TripPlanner.API.Data
         }
 
         public DbSet<Service> Services { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Trip> Trips { get; set; }
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

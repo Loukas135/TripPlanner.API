@@ -72,7 +72,6 @@ namespace TripPlanner.API.Repository
 				new Claim(JwtRegisteredClaimNames.Sub, user.Id),
 				new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 				new Claim(JwtRegisteredClaimNames.Email, user.Email),
-				new Claim("id",user.Id)
 			}.Union(userClaims).Union(roleClaims);
 			var token = new JwtSecurityToken(
 				issuer: _configuration["JwtSettings:Issuer"],

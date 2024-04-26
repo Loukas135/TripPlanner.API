@@ -15,6 +15,8 @@ namespace TripPlanner.API.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Trip> Trips { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -23,6 +25,7 @@ namespace TripPlanner.API.Data
             modelBuilder.ApplyConfiguration(new CarCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new RoomCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new GovernorateConfiguration());
+
         }
     }
 }

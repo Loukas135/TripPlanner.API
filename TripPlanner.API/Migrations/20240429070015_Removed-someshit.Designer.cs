@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripPlanner.API.Data;
 
@@ -11,9 +12,11 @@ using TripPlanner.API.Data;
 namespace TripPlanner.API.Migrations
 {
     [DbContext(typeof(TripPlannerDbContext))]
-    partial class TripPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240429070015_Removed-someshit")]
+    partial class Removedsomeshit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,37 +54,37 @@ namespace TripPlanner.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "268627f7-115e-476a-aade-d88c280ff128",
+                            Id = "bca7c1f8-b31c-428f-837b-6040e5d24d07",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fea97f56-e2f2-4b21-9c40-bfb8b2080c82",
+                            Id = "1fb0ab6c-1bf5-4aa2-a1fb-ae47d2ada376",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "6bd4cf0f-a99a-4e97-aefd-8376395958ad",
+                            Id = "5ac8b26d-688f-4cad-9e28-aff76f117250",
                             Name = "HotelOwner",
                             NormalizedName = "HOTELOWNER"
                         },
                         new
                         {
-                            Id = "8e9a682e-ac4c-4e62-8868-ffec0353101c",
+                            Id = "91cf4ed1-4c56-4462-864a-46416243385d",
                             Name = "CarRental",
                             NormalizedName = "CARRENTAL"
                         },
                         new
                         {
-                            Id = "8148849c-7301-4a77-8a79-a400919c2fbe",
+                            Id = "667140d7-db29-4326-8610-006c70d0ef95",
                             Name = "TourismOffice",
                             NormalizedName = "TOURISMOFFICE"
                         },
                         new
                         {
-                            Id = "234cbea4-cacb-4ff9-b604-13e41d7c3489",
+                            Id = "bcd5fdcb-d055-4427-8938-268b67dd6005",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         });
@@ -545,18 +548,6 @@ namespace TripPlanner.API.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("Rooms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "room no 1",
-                            NumberOfPeople = 3,
-                            PricePerNight = 0f,
-                            Quantity = 1000,
-                            RoomCategoryId = 1,
-                            ServiceId = 1
-                        });
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.RoomCategory", b =>
@@ -631,18 +622,6 @@ namespace TripPlanner.API.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "somewhere",
-                            ApiUserId = "53efaa18-7ae1-499a-b96c-3e7529c10b42",
-                            Description = "good hotel",
-                            GovernorateId = 1,
-                            Name = "ifjas",
-                            ServiceTypeId = 1
-                        });
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.Trip", b =>

@@ -7,7 +7,7 @@ using TripPlanner.API.Data.Services;
 
 namespace TripPlanner.API.Repository
 {
-	public class ServiceRepository : GenericRepository<Service>, IServiceRepository
+	public class ServiceRepository : IServiceRepository
 	{
 		private readonly TripPlannerDbContext _context;
 		private readonly IMapper _mapper;
@@ -17,8 +17,22 @@ namespace TripPlanner.API.Repository
 			this._context = context;
 			this._mapper = mapper;
 		}
+       public async Task<Service> GetAsync(int? id)
+		{
+            if (id is null)
+            {
+                return null;
+            }
+			return await _context.Services.FindAsync(id);
+        }
+        public async Task<Service> CreateAsync(Service service)
+		{
+			await _context.Services.AddAsync(service);
+			await _context.SaveChangesAsync();
+			return service;
+		}
 
-		public Task<List<Service>> FilterByType(string type)
+        public Task<List<Service>> FilterByType(string type)
 		{
 			throw new NotImplementedException();
 		}

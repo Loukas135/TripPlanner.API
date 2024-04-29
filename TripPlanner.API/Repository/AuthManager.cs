@@ -54,8 +54,9 @@ namespace TripPlanner.API.Repository
 			var token = await GenerateToken(_user);
 
 			return new AuthResponseDto {
-                Token = token,
-                UserName = _user.UserName
+				Token = token,
+				UserName = _user.UserName,
+				RefreshToken = await CreateRefreshToken()
 				
 			};
 
@@ -117,7 +118,7 @@ namespace TripPlanner.API.Repository
         public async Task<string> CreateRefreshToken()
         {
             await _userManager.RemoveAuthenticationTokenAsync(_user, _loginprovidor, _refresh);
-            var NewToken = await _userManager.GenerateUserTokenAsync(_user, _loginprovidor, _refresh);
+			var NewToken = await _userManager.GenerateUserTokenAsync(_user, _loginprovidor, _refresh) ;
             var res = await _userManager.SetAuthenticationTokenAsync(_user, _loginprovidor, _refresh, NewToken);
             return NewToken;
 

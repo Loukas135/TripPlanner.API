@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TripPlanner.API.Model.Reservations
 {
@@ -7,12 +8,14 @@ namespace TripPlanner.API.Model.Reservations
 		[ForeignKey(nameof(ServiceId))]
 		public int ServiceId { get; set; }
 
+		[AllowNull]
 		[ForeignKey(nameof(RoomId))]
+		
 		public int? RoomId { get; set; }
-
+		[AllowNull]
 		[ForeignKey(nameof(TripId))]
 		public int? TripId { get; set; }
-
+		[AllowNull]
 		[ForeignKey(nameof(CarId))]
 		public int? CarId { get; set; }
 

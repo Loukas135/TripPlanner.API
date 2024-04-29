@@ -32,7 +32,7 @@ namespace TripPlanner.API.Controllers
 			return CreatedAtAction(nameof(GetById), new { id }, null);
 		}
 
-		[HttpPost]
+		[HttpDelete]
 		[Authorize(Roles = "User")]
 		public async Task<IActionResult> DeleteReservation(int id)
 		{

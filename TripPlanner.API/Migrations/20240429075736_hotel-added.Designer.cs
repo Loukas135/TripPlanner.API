@@ -12,8 +12,8 @@ using TripPlanner.API.Data;
 namespace TripPlanner.API.Migrations
 {
     [DbContext(typeof(TripPlannerDbContext))]
-    [Migration("20240417185837_AddedConfigurationsAndIdentityTables")]
-    partial class AddedConfigurationsAndIdentityTables
+    [Migration("20240429075736_hotel-added")]
+    partial class hoteladded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,37 +54,37 @@ namespace TripPlanner.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0724f204-2d64-4d41-af4e-eb538ddf4880",
+                            Id = "82bd10a1-3b4e-4b08-b031-c851a006113e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "9a836804-5675-4fab-be60-f352e0c2afa9",
+                            Id = "5579480c-e8cb-4a55-be34-f817ded4d6a3",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "1dea26d4-8deb-41d6-bc49-f179f74208f5",
+                            Id = "bf101c65-27b9-467a-bf6a-95154842bd89",
                             Name = "HotelOwner",
                             NormalizedName = "HOTELOWNER"
                         },
                         new
                         {
-                            Id = "18e8b4c5-fff7-4c2e-b8fb-d42c84e3accd",
+                            Id = "09279641-248e-4514-82ce-f047373b6223",
                             Name = "CarRental",
                             NormalizedName = "CARRENTAL"
                         },
                         new
                         {
-                            Id = "d39eb6a4-5173-47b1-8496-a72b81196d9a",
+                            Id = "74723270-2c05-4f1c-aaaf-17076d7140b7",
                             Name = "TourismOffice",
                             NormalizedName = "TOURISMOFFICE"
                         },
                         new
                         {
-                            Id = "06672edc-1675-4aa3-a8cd-55a7ce7ae21d",
+                            Id = "b974a2cf-8c15-41aa-b7ae-7f0ca7cf37af",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         });
@@ -283,6 +283,9 @@ namespace TripPlanner.API.Migrations
                     b.Property<float>("PricePerMonth")
                         .HasColumnType("real");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
@@ -473,6 +476,44 @@ namespace TripPlanner.API.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TripPlanner.API.Data.Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApiUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cost")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("TripId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reservations");
+                });
+
             modelBuilder.Entity("TripPlanner.API.Data.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -490,6 +531,9 @@ namespace TripPlanner.API.Migrations
 
                     b.Property<float>("PricePerNight")
                         .HasColumnType("real");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<int>("RoomCategoryId")
                         .HasColumnType("int");
@@ -553,7 +597,6 @@ namespace TripPlanner.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApiUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
@@ -579,6 +622,18 @@ namespace TripPlanner.API.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "somewhere",
+                            ApiUserId = "53efaa18-7ae1-499a-b96c-3e7529c10b42",
+                            Description = "good hotel",
+                            GovernorateId = 1,
+                            Name = "ifjas",
+                            ServiceTypeId = 1
+                        });
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.Trip", b =>
@@ -696,9 +751,7 @@ namespace TripPlanner.API.Migrations
                 {
                     b.HasOne("TripPlanner.API.Data.ApiUser", "ApiUser")
                         .WithMany()
-                        .HasForeignKey("ApiUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ApiUserId");
 
                     b.HasOne("TripPlanner.API.Data.Governorate", "Governorate")
                         .WithMany("Services")

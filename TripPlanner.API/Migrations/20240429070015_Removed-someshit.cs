@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TripPlanner.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedConfigurationsAndIdentityTables : Migration
+    public partial class Removedsomeshit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,6 +77,26 @@ namespace TripPlanner.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Governorate", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reservations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: true),
+                    TripId = table.Column<int>(type: "int", nullable: true),
+                    CarId = table.Column<int>(type: "int", nullable: true),
+                    ApiUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cost = table.Column<int>(type: "int", nullable: false),
+                    From = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    To = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reservations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -239,7 +259,8 @@ namespace TripPlanner.API.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PricePerMonth = table.Column<float>(type: "real", nullable: false),
                     CarCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false)
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -262,7 +283,7 @@ namespace TripPlanner.API.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GovernorateId = table.Column<int>(type: "int", nullable: false),
-                    ApiUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ApiUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ServiceTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -272,8 +293,7 @@ namespace TripPlanner.API.Migrations
                         name: "FK_Services_AspNetUsers_ApiUserId",
                         column: x => x.ApiUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Services_Governorate_GovernorateId",
                         column: x => x.GovernorateId,
@@ -298,7 +318,8 @@ namespace TripPlanner.API.Migrations
                     NumberOfPeople = table.Column<int>(type: "int", nullable: false),
                     PricePerNight = table.Column<float>(type: "real", nullable: false),
                     RoomCategoryId = table.Column<int>(type: "int", nullable: false),
-                    ServiceId = table.Column<int>(type: "int", nullable: false)
+                    ServiceId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -322,12 +343,12 @@ namespace TripPlanner.API.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "06672edc-1675-4aa3-a8cd-55a7ce7ae21d", null, "Restaurant", "RESTAURANT" },
-                    { "0724f204-2d64-4d41-af4e-eb538ddf4880", null, "User", "USER" },
-                    { "18e8b4c5-fff7-4c2e-b8fb-d42c84e3accd", null, "CarRental", "CARRENTAL" },
-                    { "1dea26d4-8deb-41d6-bc49-f179f74208f5", null, "HotelOwner", "HOTELOWNER" },
-                    { "9a836804-5675-4fab-be60-f352e0c2afa9", null, "Administrator", "ADMINISTRATOR" },
-                    { "d39eb6a4-5173-47b1-8496-a72b81196d9a", null, "TourismOffice", "TOURISMOFFICE" }
+                    { "1fb0ab6c-1bf5-4aa2-a1fb-ae47d2ada376", null, "Administrator", "ADMINISTRATOR" },
+                    { "5ac8b26d-688f-4cad-9e28-aff76f117250", null, "HotelOwner", "HOTELOWNER" },
+                    { "667140d7-db29-4326-8610-006c70d0ef95", null, "TourismOffice", "TOURISMOFFICE" },
+                    { "91cf4ed1-4c56-4462-864a-46416243385d", null, "CarRental", "CARRENTAL" },
+                    { "bca7c1f8-b31c-428f-837b-6040e5d24d07", null, "User", "USER" },
+                    { "bcd5fdcb-d055-4427-8938-268b67dd6005", null, "Restaurant", "RESTAURANT" }
                 });
 
             migrationBuilder.InsertData(
@@ -472,6 +493,9 @@ namespace TripPlanner.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

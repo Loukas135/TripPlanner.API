@@ -21,7 +21,8 @@ builder.Services.AddDbContext<TripPlannerDbContext>(options =>
 
 builder.Services.AddIdentityCore<ApiUser> ()
 	.AddRoles<IdentityRole>()
-	.AddEntityFrameworkStores<TripPlannerDbContext>();
+	.AddTokenProvider<DataProtectorTokenProvider<ApiUser>>("TripPlannerLoginProvidor")
+    .AddEntityFrameworkStores<TripPlannerDbContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

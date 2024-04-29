@@ -17,9 +17,9 @@ namespace TripPlanner.API.Data
         [AllowNull]
         public Governorate? Governorate { get; set; }
 
-
+        [AllowNull]
         [ForeignKey(nameof(ApiUserId))]
-        public string ApiUserId { get; set; }
+        public string? ApiUserId { get; set; }
         [AllowNull]
         public ApiUser? ApiUser { get; set; }
 

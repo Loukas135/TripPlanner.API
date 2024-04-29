@@ -4,9 +4,11 @@ using TripPlanner.API.Data.Services;
 
 namespace TripPlanner.API.Contracts
 {
-    public interface IServiceRepository : IGenericRepository<Service>
+    public interface IServiceRepository
     {
-       public Task<List<Service>> SearchByName(string name);
+       public  Task<Service> GetAsync(int? id);
+        public Task<Service> CreateAsync(Service service);
+        public Task<List<Service>> SearchByName(string name);
        public Task<List<Service>> FilterByType(string type);
        //public Task CreateServiceAsync(ServiceRegisterDto serviceRegisterDto, string userName);
 

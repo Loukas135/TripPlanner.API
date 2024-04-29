@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
 using TripPlanner.API.Data.Services;
+using TripPlanner.API.Repository;
 
 namespace TripPlanner.API.Controllers
 {
@@ -88,9 +89,12 @@ namespace TripPlanner.API.Controllers
         {
 
             var newService = _mapper.Map<Service>(serviceRegisterDto);
-            return Ok(newService);
-            /*await _serviceRepository.AddAsync(newService);
-            return CreatedAtAction("GetService", new { id = newService.Id }, newService);*/
+            var record = _serviceRepository.CreateAsync(newService); ;
+            
+           // await _serviceRepository.AddAsync(newService);
+           // return CreatedAtAction("Get Service", new { id = newService.Id }, newService);
+            
+            return CreatedAtAction("GetService", new { id = newService.Id }, newService);
         }
 
         // DELETE: api/Services/5

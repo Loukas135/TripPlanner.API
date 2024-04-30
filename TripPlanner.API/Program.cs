@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Repository;
+using TripPlanner.API.Repository.Generics;
+using TripPlanner.API.Contracts.Generics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +23,7 @@ builder.Services.AddDbContext<TripPlannerDbContext>(options =>
 
 builder.Services.AddIdentityCore<ApiUser> ()
 	.AddRoles<IdentityRole>()
-	.AddTokenProvider<DataProtectorTokenProvider<ApiUser>>("TripPlannerLoginProvidor")
-    .AddEntityFrameworkStores<TripPlannerDbContext>();
+	.AddEntityFrameworkStores<TripPlannerDbContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

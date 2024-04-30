@@ -1,4 +1,4 @@
-﻿namespace TripPlanner.API.Contracts
+﻿namespace TripPlanner.API.Contracts.Generics
 {
     public interface IGenericRepository<T> where T : class
     {

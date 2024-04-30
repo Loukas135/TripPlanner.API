@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
 using TripPlanner.API.Model.Reservations;
+using TripPlanner.API.Repository.Generics;
 
 namespace TripPlanner.API.Repository
 {
-	public class ReservationRepository(IMapper mapper, TripPlannerDbContext dbContext,
+    public class ReservationRepository(IMapper mapper, TripPlannerDbContext dbContext,
 		UserManager<ApiUser> userManager) : GenericRepository<Reservation>, IReservationRepository
 	{
 		public async Task<int> AddReservationAsync(CreateReservationDto createReservationDto, string userId)

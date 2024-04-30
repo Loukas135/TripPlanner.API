@@ -44,7 +44,32 @@ namespace TripPlanner.API.Repository
 						  select s;
 			return service.ToList<Service>();
 		}
-		
+
+		public Task<Service> AddAsync(Service entity)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task UpdateAsync(Service entity)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task DeleteAsync(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<List<Service>> GetAllAsync()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<bool> ExistsAsync(int id)
+		{
+			throw new NotImplementedException();
+		}
+
 		//public Task<List<Service>> FilterByType(string type)
 		//{
 		//

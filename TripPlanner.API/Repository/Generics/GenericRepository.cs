@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using TripPlanner.API.Contracts;
+using TripPlanner.API.Contracts.Generics;
 using TripPlanner.API.Data;
 
-namespace TripPlanner.API.Repository
+namespace TripPlanner.API.Repository.Generics
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
@@ -13,7 +13,7 @@ namespace TripPlanner.API.Repository
         public async Task<T> AddAsync(T entity)
         {
             await _context.AddAsync(entity);
-            
+
             var record = await _context.SaveChangesAsync();
             return entity;
         }
@@ -22,7 +22,7 @@ namespace TripPlanner.API.Repository
         {
             var entity = await GetAsync(id);
             _context.Remove(entity);
-            await _context.SaveChangesAsync();   
+            await _context.SaveChangesAsync();
         }
 
         public async Task<bool> ExistsAsync(int id)
@@ -47,7 +47,7 @@ namespace TripPlanner.API.Repository
 
         public async Task UpdateAsync(T entity)
         {
-			_context.Update(entity);
+            _context.Update(entity);
             await _context.SaveChangesAsync();
         }
     }

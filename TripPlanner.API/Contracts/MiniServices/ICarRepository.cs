@@ -3,7 +3,7 @@ using TripPlanner.API.Data;
 
 namespace TripPlanner.API.Contracts.MiniServices
 {
-	public interface ICarRepository : IMiniGenericRepository<Car>
+	public interface ICarRepository : IGenericRepository<Car>
 	{
 	}
 }

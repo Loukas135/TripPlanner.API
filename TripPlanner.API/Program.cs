@@ -10,6 +10,8 @@ using TripPlanner.API.Contracts;
 using TripPlanner.API.Repository;
 using TripPlanner.API.Repository.Generics;
 using TripPlanner.API.Contracts.Generics;
+using TripPlanner.API.Contracts.MiniServices;
+using TripPlanner.API.Repository.MiniServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,8 @@ builder.Services.AddDbContext<TripPlannerDbContext>(options =>
 
 builder.Services.AddIdentityCore<ApiUser> ()
 	.AddRoles<IdentityRole>()
-	.AddEntityFrameworkStores<TripPlannerDbContext>();
+	.AddTokenProvider<DataProtectorTokenProvider<ApiUser>>("TripPlannerLoginProvidor")
+    .AddEntityFrameworkStores<TripPlannerDbContext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -46,6 +49,9 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IAuthManager, AuthManager>();
 builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<ITripRepository, TripRepository>();
+builder.Services.AddScoped<ICarRepository, CarRepository>();
 
 
 builder.Services.AddAuthentication(options =>

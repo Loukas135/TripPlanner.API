@@ -5,6 +5,7 @@
 		public string Description { get; set; }
 		public int NumberOfPeople { get; set; }
 		public float PricePerNight { get; set; }
+		public int RoomCategory {  get; set; }
 		public int Quantity { get; set; }
 	}
 }

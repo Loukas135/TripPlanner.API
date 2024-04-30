@@ -8,10 +8,17 @@ using TripPlanner.API.Repository.Generics;
 
 namespace TripPlanner.API.Repository
 {
-    public class ReservationRepository(IMapper mapper, TripPlannerDbContext dbContext,
-		UserManager<ApiUser> userManager) : GenericRepository<Reservation>, IReservationRepository
+    public class ReservationRepository : GenericRepository<Reservation>, IReservationRepository
 	{
-		public async Task<int> AddReservationAsync(CreateReservationDto createReservationDto, string userId)
+		private readonly IMapper mapper;
+		private readonly TripPlannerDbContext dbContext;
+		private readonly UserManager<ApiUser> userManager;
+
+        public ReservationRepository(TripPlannerDbContext context, IMapper mapper, UserManager<ApiUser> userManager) : base(context, mapper, userManager)
+        {
+        }
+
+        public async Task<int> AddReservationAsync(CreateReservationDto createReservationDto, string userId)
 		{
 			var reservation = mapper.Map<Reservation>(createReservationDto);
 			reservation.ApiUserId = userId;

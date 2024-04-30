@@ -89,7 +89,7 @@ namespace TripPlanner.API.Controllers
         {
 
             var newService = _mapper.Map<Service>(serviceRegisterDto);
-            var record = _serviceRepository.CreateAsync(newService); ;
+            var record = _serviceRepository.AddAsync(newService); ;
             
            // await _serviceRepository.AddAsync(newService);
            // return CreatedAtAction("Get Service", new { id = newService.Id }, newService);

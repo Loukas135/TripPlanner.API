@@ -11,7 +11,7 @@ using System.Text;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
 using TripPlanner.API.Data.Services;
-using TripPlanner.API.Model.Response;
+using TripPlanner.API.Model;
 using TripPlanner.API.Model.Services;
 using TripPlanner.API.Model.User;
 

@@ -3,7 +3,9 @@ using TripPlanner.API.Data;
 
 namespace TripPlanner.API.Contracts.MiniServices
 {
-	public interface IRoomRepository : IMiniGenericRepository<Room>
-	{
-	}
+    public interface IRoomRepository : IGenericRepository<Room>
+    {
+        public Task<Service> getServiceFromUser(string id);
+
+    }
 }

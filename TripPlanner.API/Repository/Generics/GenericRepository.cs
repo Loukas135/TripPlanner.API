@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TripPlanner.API.Contracts.Generics;
 using TripPlanner.API.Data;
@@ -9,6 +10,13 @@ namespace TripPlanner.API.Repository.Generics
     {
         private readonly TripPlannerDbContext _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApiUser> _usermanager;
+        public GenericRepository(TripPlannerDbContext context, IMapper mapper,UserManager<ApiUser>userManager)
+        {
+            _context = context;
+            _mapper = mapper;
+            _usermanager = userManager;
+        }
 
         public async Task<T> AddAsync(T entity)
         {

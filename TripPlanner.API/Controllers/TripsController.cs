@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using TripPlanner.API.Model.Trip;
 
 namespace TripPlanner.API.Controllers
@@ -34,3 +34,4 @@ namespace TripPlanner.API.Controllers
 		}
 	}
 }
+*/

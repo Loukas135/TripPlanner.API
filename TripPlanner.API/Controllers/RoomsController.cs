@@ -34,24 +34,27 @@ namespace TripPlanner.API.Controllers
 		public async Task<ActionResult> AddRoom([FromBody] CreateRoomDto createRoomDto)
 		{
 			var room = _mapper.Map<Room>(createRoomDto);
-			var user= GetCurrentUser();
+			var user= await GetCurrentUser();
 			var user_id = user.Id.ToString();
-			room.ServiceId = _room.getServiceFromUser(user_id).Id;
-			_room.AddAsync(room);
-			return CreatedAtAction("Get Room", new { id = room.Id }, room);
+			var service_id= _room.getServiceFromUser(user_id).Id;
+			room.ServiceId = service_id;
+			await _room.AddAsync(room);
+			return CreatedAtAction("GetRoom",new { id = room.Id },room);
 		}
-
 		[HttpPatch]
 		[Route("{id}")]
 		public async Task<ActionResult> UpdateRoom([FromBody] RoomDto updateRoomDto, int id)
 		{
-			return NoContent();
+			var room=_mapper.Map<Room>(updateRoomDto);
+			await _room.UpdateAsync(room);
+			return Ok();
 		}
 
 		[HttpDelete]
 		[Route("{id}")]
 		public async Task<ActionResult> DeleteRoom(int id)
 		{
+			await _room.DeleteAsync(id);
 			return NoContent();
 		}
         private async Task<ApiUser> GetCurrentUser()

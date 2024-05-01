@@ -5,7 +5,7 @@ namespace TripPlanner.API.Contracts.MiniServices
 {
     public interface IRoomRepository : IGenericRepository<Room>
     {
-        public Task<Service> getServiceFromUser(string id);
+       
 
     }
 }

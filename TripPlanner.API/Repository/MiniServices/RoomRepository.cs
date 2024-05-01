@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using TripPlanner.API.Contracts.MiniServices;
 using TripPlanner.API.Data;
 using TripPlanner.API.Repository.Generics;
@@ -15,12 +16,7 @@ namespace TripPlanner.API.Repository.MiniServices
         public RoomRepository(TripPlannerDbContext context, IMapper mapper,UserManager<ApiUser> userManager) : base(context, mapper,userManager)
         {
             this.context = context;
-        }
-        public async Task<Service> getServiceFromUser(string id)
-        {
-            var ser = await context.Services.Where(n => n.ApiUserId == id).FirstOrDefaultAsync();
-            return ser;
-
-        }
+        } 
+        
     }
 }

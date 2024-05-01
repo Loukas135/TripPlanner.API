@@ -17,7 +17,12 @@ namespace TripPlanner.API.Repository.Generics
             _mapper = mapper;
             _usermanager = userManager;
         }
+        public Service getServiceFromUser(string id)
+        {
+            var ser = _context.Services.Where(s => s.ApiUserId == id).FirstOrDefault();
+            return ser;
 
+        }
         public async Task<T> AddAsync(T entity)
         {
             await _context.AddAsync(entity);

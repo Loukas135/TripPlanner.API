@@ -16,7 +16,9 @@ namespace TripPlanner.API.Repository
 
 		public ServiceRepository(TripPlannerDbContext context, IMapper mapper,UserManager<ApiUser>userManager):base(context,mapper,userManager)
         {
-			
+			this.context = context;
+			this.mapper = mapper;
+			this.userManager = userManager;
 		}
         public Task<List<Service>> FilterByType(string type)
 		{

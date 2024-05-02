@@ -22,6 +22,10 @@ namespace TripPlanner.API.Configuration
             CreateMap<CreateRoomDto, Room>().ReverseMap();
             CreateMap<CreateTripDto, Trip>().ReverseMap();
             CreateMap<CreateCarDto, Car>().ReverseMap();
+
+            CreateMap<Trip, TripDto>().ReverseMap();
+
+           
         }
     }
 }

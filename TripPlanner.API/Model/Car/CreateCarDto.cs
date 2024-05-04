@@ -6,5 +6,6 @@
 		public string Description { get; set; }
 		public float PricePerMonth { get; set; }
 		public int Quantity { get; set; }
-	}
+        public int CarCategoryId { get; set; }
+    }
 }

@@ -12,8 +12,8 @@ using TripPlanner.API.Data;
 namespace TripPlanner.API.Migrations
 {
     [DbContext(typeof(TripPlannerDbContext))]
-    [Migration("20240429070015_Removed-someshit")]
-    partial class Removedsomeshit
+    [Migration("20240505172448_OverallRatingForServices")]
+    partial class OverallRatingForServices
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,37 +54,37 @@ namespace TripPlanner.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bca7c1f8-b31c-428f-837b-6040e5d24d07",
+                            Id = "1495703b-95cb-4b35-898e-b1f76a4c0c7e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "1fb0ab6c-1bf5-4aa2-a1fb-ae47d2ada376",
+                            Id = "97605af6-45c0-42a8-b86b-5e0c554eff37",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "5ac8b26d-688f-4cad-9e28-aff76f117250",
+                            Id = "8aa306e1-bba2-4185-8151-87b54a273a5c",
                             Name = "HotelOwner",
                             NormalizedName = "HOTELOWNER"
                         },
                         new
                         {
-                            Id = "91cf4ed1-4c56-4462-864a-46416243385d",
+                            Id = "552ac602-16b7-4c9e-8a4e-17fc530e7003",
                             Name = "CarRental",
                             NormalizedName = "CARRENTAL"
                         },
                         new
                         {
-                            Id = "667140d7-db29-4326-8610-006c70d0ef95",
+                            Id = "d6f90178-8a37-4580-b99b-1ca2a1201f00",
                             Name = "TourismOffice",
                             NormalizedName = "TOURISMOFFICE"
                         },
                         new
                         {
-                            Id = "bcd5fdcb-d055-4427-8938-268b67dd6005",
+                            Id = "45cc3e14-a093-4ff6-ad10-a5bdd6caf334",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         });
@@ -476,6 +476,29 @@ namespace TripPlanner.API.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TripPlanner.API.Data.Ratings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApiUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("TripPlanner.API.Data.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -610,6 +633,9 @@ namespace TripPlanner.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Overall_Rating")
+                        .HasColumnType("int");
+
                     b.Property<int>("ServiceTypeId")
                         .HasColumnType("int");
 
@@ -639,9 +665,8 @@ namespace TripPlanner.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("From")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -649,9 +674,11 @@ namespace TripPlanner.API.Migrations
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("To")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Tickets")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

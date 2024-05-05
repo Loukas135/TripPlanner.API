@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using TripPlanner.API.Data.Configurations;
 
@@ -28,5 +29,8 @@ namespace TripPlanner.API.Data
 		public int ServiceTypeId { get; set; }
         [AllowNull]
         public ServiceType? ServiceType { get; set; }
+        [AllowNull]
+        [Range(0, 5)]
+        public int? Overall_Rating { get; set; } = null;
     }
 }

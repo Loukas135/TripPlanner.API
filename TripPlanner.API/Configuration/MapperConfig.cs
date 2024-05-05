@@ -2,6 +2,7 @@
 using TripPlanner.API.Data;
 using TripPlanner.API.Data.Services;
 using TripPlanner.API.Model.Car;
+using TripPlanner.API.Model.Ratings;
 using TripPlanner.API.Model.Reservations;
 using TripPlanner.API.Model.Room;
 using TripPlanner.API.Model.Trip;
@@ -24,6 +25,7 @@ namespace TripPlanner.API.Configuration
             CreateMap<CreateCarDto, Car>().ReverseMap();
 
             CreateMap<Trip, TripDto>().ReverseMap();
+            CreateMap<Ratings, CreateRatingsDto>().ReverseMap();
 
            
         }

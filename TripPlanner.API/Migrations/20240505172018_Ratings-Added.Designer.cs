@@ -12,8 +12,8 @@ using TripPlanner.API.Data;
 namespace TripPlanner.API.Migrations
 {
     [DbContext(typeof(TripPlannerDbContext))]
-    [Migration("20240429075736_hotel-added")]
-    partial class hoteladded
+    [Migration("20240505172018_Ratings-Added")]
+    partial class RatingsAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,37 +54,37 @@ namespace TripPlanner.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "82bd10a1-3b4e-4b08-b031-c851a006113e",
+                            Id = "2069d6a8-dd5a-4664-8322-b77c41e1aad3",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "5579480c-e8cb-4a55-be34-f817ded4d6a3",
+                            Id = "4557a5af-f3f2-407e-aba2-02c7da4071a4",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "bf101c65-27b9-467a-bf6a-95154842bd89",
+                            Id = "9f335e5b-137f-43f1-a6ef-0d95061470fd",
                             Name = "HotelOwner",
                             NormalizedName = "HOTELOWNER"
                         },
                         new
                         {
-                            Id = "09279641-248e-4514-82ce-f047373b6223",
+                            Id = "74df9ed8-1f6f-445b-ab44-c318b48fc0a4",
                             Name = "CarRental",
                             NormalizedName = "CARRENTAL"
                         },
                         new
                         {
-                            Id = "74723270-2c05-4f1c-aaaf-17076d7140b7",
+                            Id = "ff1a8180-83c2-4c88-b956-972c687ed111",
                             Name = "TourismOffice",
                             NormalizedName = "TOURISMOFFICE"
                         },
                         new
                         {
-                            Id = "b974a2cf-8c15-41aa-b7ae-7f0ca7cf37af",
+                            Id = "b2887be9-4840-4ce5-a751-3631151aded7",
                             Name = "Restaurant",
                             NormalizedName = "RESTAURANT"
                         });
@@ -476,6 +476,29 @@ namespace TripPlanner.API.Migrations
                         });
                 });
 
+            modelBuilder.Entity("TripPlanner.API.Data.Ratings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApiUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("TripPlanner.API.Data.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -622,18 +645,6 @@ namespace TripPlanner.API.Migrations
                     b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Address = "somewhere",
-                            ApiUserId = "53efaa18-7ae1-499a-b96c-3e7529c10b42",
-                            Description = "good hotel",
-                            GovernorateId = 1,
-                            Name = "ifjas",
-                            ServiceTypeId = 1
-                        });
                 });
 
             modelBuilder.Entity("TripPlanner.API.Data.Trip", b =>
@@ -651,9 +662,8 @@ namespace TripPlanner.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("From")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -661,9 +671,11 @@ namespace TripPlanner.API.Migrations
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("To")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Tickets")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

@@ -21,7 +21,17 @@ namespace TripPlanner.API.Repository
 
         }
 
-        public async Task UpdateRating(int serviceId, List<Ratings> ratings)
+        public Task<IEnumerable<Ratings>> GetAllInServiceAsync(int serviceId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateRating(int serviceId, List<Ratings> ratings)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*public async Task UpdateRating(int serviceId, List<Ratings> ratings)
         {
            var service= await _serviceRepository.GetAsync(serviceId);
             int overall = 0;
@@ -31,6 +41,6 @@ namespace TripPlanner.API.Repository
             }
             overall /= ratings.Count;
             await _serviceRepository.UpdateAsync(service);
-        }
+        }*/
     }
 }

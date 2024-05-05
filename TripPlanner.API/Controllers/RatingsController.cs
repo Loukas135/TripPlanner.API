@@ -10,22 +10,33 @@ namespace TripPlanner.API.Controllers
 {
     [ApiController]
     [Route("/api/{serviceId}/Ratings")]
-    public class RatingsController(IRatingsRepository ratings,UserManager<ApiUser> userManager,IMapper mapper) :ControllerBase
+    public class RatingsController(IRatingsRepository ratings, UserManager<ApiUser> userManager, IMapper mapper) : ControllerBase
     {
 
         [HttpPost]
-        [Authorize(Roles ="User")]
-        
-        public async Task<ActionResult> CreateRating([FromRoute]int serviceId,CreateRatingsDto createRatingsDto)
+        [Authorize(Roles = "User")]
+
+        public async Task<ActionResult> CreateRating([FromRoute] int serviceId, CreateRatingsDto createRatingsDto)
         {
             var full_rating = mapper.Map<Ratings>(createRatingsDto);
-            var user =await  GetCurrentUser();
+            var user = await GetCurrentUser();
             var user_id = user.Id.ToString();
             full_rating.ApiUserId = user_id;
             full_rating.ServiceId = serviceId;
             await ratings.AddAsync(full_rating);
+            // var all_ratings=await ratings.GetAllInService(serviceId);
+            //await ratings.UpdateRating(all_ratings);
             return Ok(full_rating);
         }
+        // majd idk how to put more than one role and my battery is dying but put all roles that aren't users
+        [HttpGet]
+        [Authorize(Roles = "HotelOwner,CarRental,Adminstrator,....")]
+        public async Task<ActionResult<IEnumerable<Ratings>>>GetAllRatingsInService(int serviceId)
+        {
+            var ratingList = await ratings.GetAllInServiceAsync(serviceId);
+            return Ok(ratingList);
+        }
+
 
         private async Task<ApiUser> GetCurrentUser()
         {

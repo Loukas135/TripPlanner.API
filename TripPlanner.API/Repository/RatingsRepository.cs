@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using TripPlanner.API.Contracts;
 using TripPlanner.API.Data;
 using TripPlanner.API.Repository.Generics;
@@ -21,17 +22,18 @@ namespace TripPlanner.API.Repository
 
         }
 
-        public Task<IEnumerable<Ratings>> GetAllInServiceAsync(int serviceId)
+        public async Task<IEnumerable<Ratings>> GetAllInServiceAsync(int serviceId)
         {
-            throw new NotImplementedException();
+            var rates = await _context.Ratings.Where(r => r.ServiceId == serviceId).ToListAsync();
+            return rates;
         }
 
-        public Task UpdateRating(int serviceId, List<Ratings> ratings)
+       /* public Task UpdateRating(int serviceId, List<Ratings> ratings)
         {
             throw new NotImplementedException();
-        }
+        }*/
 
-        /*public async Task UpdateRating(int serviceId, List<Ratings> ratings)
+        public async Task UpdateRating(int serviceId, List<Ratings> ratings)
         {
            var service= await _serviceRepository.GetAsync(serviceId);
             int overall = 0;
@@ -40,7 +42,8 @@ namespace TripPlanner.API.Repository
                 overall += rate.Rating;
             }
             overall /= ratings.Count;
+            service.Overall_Rating = overall;
             await _serviceRepository.UpdateAsync(service);
-        }*/
+        }
     }
 }

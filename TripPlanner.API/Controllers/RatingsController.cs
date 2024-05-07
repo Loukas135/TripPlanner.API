@@ -24,13 +24,14 @@ namespace TripPlanner.API.Controllers
             full_rating.ApiUserId = user_id;
             full_rating.ServiceId = serviceId;
             await ratings.AddAsync(full_rating);
-            // var all_ratings=await ratings.GetAllInService(serviceId);
-            //await ratings.UpdateRating(all_ratings);
+             var all_ratings=await ratings.GetAllInServiceAsync(serviceId);
+            var rates = all_ratings.ToList();
+            await ratings.UpdateRating(serviceId,rates);
             return Ok(full_rating);
         }
         // majd idk how to put more than one role and my battery is dying but put all roles that aren't users
         [HttpGet]
-        [Authorize(Roles = "HotelOwner,CarRental,Adminstrator,....")]
+        [Authorize(Roles ="HotelOwner")]
         public async Task<ActionResult<IEnumerable<Ratings>>>GetAllRatingsInService(int serviceId)
         {
             var ratingList = await ratings.GetAllInServiceAsync(serviceId);
